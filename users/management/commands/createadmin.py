@@ -7,7 +7,6 @@ class Command(BaseCommand):
         User = get_user_model()
         user = User.objects.create(
             email='admin@mail.ru',
-            username=None
         )
 
         user.set_password('123qwe')
