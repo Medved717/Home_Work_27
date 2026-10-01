@@ -3,7 +3,7 @@ from .models import Product, Category
 from django.views.generic import ListView, DetailView, TemplateView, UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 from django.forms.models import inlineformset_factory
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class ProductListView(ListView):
     model = Product
@@ -11,13 +11,13 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
@@ -25,7 +25,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('catalog:product_list')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
@@ -33,7 +33,7 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy('catalog:product_list')
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     context_object_name = 'product'
     template_name = 'catalog/product_delete.html'
@@ -44,7 +44,7 @@ class ContactsTemplateView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = 'catalog/category_form.html'
@@ -52,13 +52,13 @@ class CategoryCreateView(CreateView):
     success_url = reverse_lazy('catalog:product_list')
 
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = 'catalog/category_detail.html'
     context_object_name = 'category'
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = 'catalog/category_form.html'
@@ -66,7 +66,7 @@ class CategoryUpdateView(UpdateView):
     success_url = reverse_lazy('catalog:product_list')
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
     context_object_name = 'category'
     template_name = 'catalog/category_delete.html'
